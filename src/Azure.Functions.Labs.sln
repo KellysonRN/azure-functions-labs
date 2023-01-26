@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionsAppSample", "FunctionsAppSample\FunctionsAppSample.csproj", "{3BD2469B-0D26-48D6-93AC-E8C200043288}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Functions.Labs.App", "Azure.Functions.Labs.App\Azure.Functions.Labs.App.csproj", "{3BD2469B-0D26-48D6-93AC-E8C200043288}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{82EE2249-5695-4B83-A3E2-6DDD3527D3B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Functions.Labs.Tests", "Azure.Functions.Labs.Tests\Azure.Functions.Labs.Tests.csproj", "{82EE2249-5695-4B83-A3E2-6DDD3527D3B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

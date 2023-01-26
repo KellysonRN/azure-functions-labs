@@ -6,11 +6,11 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace FunctionsAppSample
+namespace Azure.Functions.Labs.App
 {
-    public static class Function1
+    public static class FunctionExample7
     {
-        [FunctionName("Function1")]
+        [FunctionName("FunctionExample7")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
         {
