@@ -1,4 +1,4 @@
-name: Build
+name: SonarCloud
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Build
+    name: Build and analyze
     runs-on: windows-latest
     steps:
       - name: Set up JDK 11
@@ -36,17 +36,12 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: Install dotnet coverage
-        shell: powershell
-        run: |
-          dotnet tool install --global dotnet-coverage
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.GHP_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"azure-functions-labs" /o:"KellysonRN" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.projectBaseDir="${{ GITHUB.WORKSPACE }}/src"
-          dotnet build Azure.Functions.Labs
-          dotnet-coverage collect Azure.Functions.Labs 'dotnet test' -f xml  -o 'coverage.xml'
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"KellysonRN_azure-functions-labs" /o:"kellysonrn" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          <insert_your_build_command>
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
