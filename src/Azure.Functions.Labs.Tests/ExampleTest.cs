@@ -15,18 +15,18 @@ namespace Azure.Functions.Labs.Tests
         [InlineData("", typeof(BadRequestResult))]
         [InlineData("QueryParamValue", typeof(OkResult))]
         [InlineData("ThisStringCausesTheFunctionToThrowAnError", typeof(InternalServerErrorResult))]
-        public async Task Should_Function_Returns_Correct_StatusCode(string queryParam, Type expectedResult)
+        public async Task Should_Returns_Correct_StatusCode(string queryParam, Type expectedResult)
         {
-            //Arrange
-            var qc = new QueryCollection(new Dictionary<string, StringValues>{{"q", new StringValues(queryParam)}});
+            var queryCollection = new QueryCollection(new Dictionary<string, StringValues>{{"q", new StringValues(queryParam)}});
+
             var request = new Mock<HttpRequest>();
             request.Setup(x => x.Query)
-                .Returns(() => qc);
+                .Returns(() => queryCollection);
 
             var logger = Mock.Of<ILogger>();
-            //Act
+
             var response = await FunctionExample7.Run(request.Object, logger);
-            //Assert
+
             Assert.True(response.GetType() == expectedResult);
         }
     }
