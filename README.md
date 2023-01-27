@@ -4,7 +4,13 @@
 
 This will exmaple to create new Azure Functions with UnitTest
 
-## Requirements
+### Features
+
+ - C#
+ - Azure Functions
+ - XUnit
+ - GitHub Actions
+ ## Requirements
 
 The project requires [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 
@@ -29,3 +35,4 @@ $ dotnet build
 ```console
 $ dotnet test
 ```
+
