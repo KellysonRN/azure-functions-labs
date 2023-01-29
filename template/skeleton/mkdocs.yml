@@ -1,0 +1,8 @@
+site_name: ${{ parameters.component_id | dump }}
+site_description: ${{ parameters.description | dump }}
+
+nav:
+  - Home: index.md
+
+plugins:
+  - techdocs-core
