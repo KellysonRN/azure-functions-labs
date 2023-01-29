@@ -26,13 +26,34 @@ From the terminal/shell/command line tool, use the following commands to build, 
 
 ### Build the project
 
-```console
+```shell
 $ dotnet build
 ```
 
 ### Run the tests
 
-```console
+```shell
 $ dotnet test
+```
+
+### Useful commands to test Azure Functions locally [more info](https://learn.microsoft.com/en-us/azure/azure-functions/functions-dotnet-class-library?tabs=v4%2Ccmd)
+
+```shell
+# Run functions locally
+$ func start
+
+# Deploy project files
+$ func azure functionapp publish <FunctionAppName>
+```
+
+### Code coverage
+
+```shell
+# install dotnet coverage
+$ dotnet tool install --global dotnet-coverage
+
+# running code coverage
+# from /src directory
+$ dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'
 ```
 
