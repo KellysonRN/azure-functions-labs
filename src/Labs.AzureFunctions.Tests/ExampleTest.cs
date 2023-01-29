@@ -1,5 +1,5 @@
 using System.Web.Http;
-using Azure.Functions.Labs.App;
+using Labs.AzureFunctions.App;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Moq;
 
-namespace Azure.Functions.Labs.Tests
+namespace Labs.AzureFunctions.Tests
 {
     public class ExampleTest
     {

@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Azure.Functions.Labs.App/Azure.Functions.Labs.App.csproj" />
+    <ProjectReference Include="../Labs.AzureFunctions.App/Labs.AzureFunctions.App.csproj" />
   </ItemGroup>
 
 </Project>
