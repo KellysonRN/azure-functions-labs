@@ -8,7 +8,7 @@ on:
       - '**/src/**'
       - '**/.github/**'
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches: [ main ]
     
 jobs:
   build:
