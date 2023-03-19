@@ -72,9 +72,9 @@ jobs:
       with:
         projectBaseDir: src
         args: >
-          -Dsonar.organization=${{ ORGANIZATION }}  
+          -Dsonar.organization=kellysonrn
           -Dsonar.coverage.jacoco.xmlReportPaths=./coverage/**/coverage.cobertura.xml
-          -Dsonar.projectKey=${{ SONAR_PROJECT_KEY }} 
+          -Dsonar.projectKey=KellysonRN_azure-functions-labs
           -Dsonar.projectBaseDir=.
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} 
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}      
