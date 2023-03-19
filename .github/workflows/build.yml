@@ -57,15 +57,14 @@ jobs:
     - name: Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
       
-    - name: Setup sonarqube
-      uses: warchant/setup-sonar-scanner@v3
-      
-    - name: Run sonarqube
-      run: sonar-scanner
-           -Dsonar.organization=kellysonrn 
-           -Dsonar.cs.vscoveragexml.reportsPaths=$GITHUB_WORKSPACE/src/coverage/**/coverage.cobertura.xml
-           -Dsonar.projectKey=KellysonRN_azure-functions-labs
-           -Dsonar.sources=$GITHUB_WORKSPACE 
-           -Dsonar.host.url=${{ secrets.SONAR_URL }} 
-           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-     
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@master
+      with:
+        projectBaseDir: src
+        args: >
+          -Dsonar.organization=kellysonrn 
+          -Dsonar.cs.vscoveragexml.reportsPaths=$GITHUB_WORKSPACE/src/coverage/**/coverage.cobertura.xml
+          -Dsonar.projectKey=KellysonRN_azure-functions-labs
+          -Dsonar.sources=$GITHUB_WORKSPACE 
+          -Dsonar.host.url=${{ secrets.SONAR_URL }} 
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}      
