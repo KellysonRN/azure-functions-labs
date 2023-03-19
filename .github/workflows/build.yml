@@ -73,7 +73,7 @@ jobs:
         projectBaseDir: src
         args: >
           -Dsonar.organization=kellysonrn
-          -Dsonar.coverageReportPaths="./sonarqubecoverage/SonarQube.xml
+          -Dsonar.coverage.jacoco.xmlReportPaths="./sonarqubecoverage/SonarQube.xml
           -Dsonar.projectKey=KellysonRN_azure-functions-labs
           -Dsonar.projectBaseDir=.
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} 
