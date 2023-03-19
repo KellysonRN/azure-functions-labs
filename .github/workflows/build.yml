@@ -39,7 +39,7 @@ jobs:
     - name: Test
       run: |
         dotnet test src --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage        
-        reportgenerator "-reports:./coverage/**/coverage.cobertura.xml" "-targetdir:./sonarqubecoverage" "-reporttypes:SonarQube"        
+        reportgenerator "-reports:coverage/**/coverage.cobertura.xml" "-targetdir:sonarqubecoverage" "-reporttypes:SonarQube"        
 
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
@@ -62,7 +62,12 @@ jobs:
         path: code-coverage-results.md
         
     - name: Write to Job Summary
-      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY      
+      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY 
+      
+    - name: Show Files
+      run: |
+        ls -R
+        cat ./sonarqubecoverage/SonarQube.xml
       
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@master
@@ -73,7 +78,7 @@ jobs:
         projectBaseDir: src
         args: >
           -Dsonar.organization=kellysonrn
-          -Dsonar.coverage.jacoco.xmlReportPaths="./sonarqubecoverage/SonarQube.xml
+          -Dsonar.coverage.jacoco.xmlReportPaths="./sonarqubecoverage/SonarQube.xml"
           -Dsonar.projectKey=KellysonRN_azure-functions-labs
           -Dsonar.projectBaseDir=.
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} 
