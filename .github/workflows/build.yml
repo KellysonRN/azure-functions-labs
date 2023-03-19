@@ -73,7 +73,7 @@ jobs:
         projectBaseDir: src
         args: >
           -Dsonar.organization=kellysonrn 
-          -Dsonar.coverage.jacoco.xmlReportPaths=${{ GITHUB.WORKSPACE }}/src/coverage/**/coverage.cobertura.xml
+          -Dsonar.coverage.jacoco.xmlReportPaths=${{ GITHUB.WORKSPACE }}/coverage/**/coverage.cobertura.xml
           -Dsonar.projectKey=KellysonRN_azure-functions-labs 
           -Dsonar.projectBaseDir=.
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} 
