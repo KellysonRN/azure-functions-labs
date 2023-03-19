@@ -32,8 +32,8 @@ jobs:
       run: dotnet build src --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test src --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
-
+      run: |
+        dotnet test src --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage        
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
@@ -57,14 +57,29 @@ jobs:
     - name: Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
       
-    - name: Setup sonarqube
-      uses: warchant/setup-sonar-scanner@v3
+    - name: DotNet Coverage
+      run: |
+        dotnet tool install --global dotnet-coverage  
+        dotnet build src --no-incremental
+        cd src
+        dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'
       
-    - name: Run sonarqube
-      run: sonar-scanner
-           -Dsonar.organization=kellysonrn 
-           -Dsonar.projectKey=KellysonRN_azure-functions-labs
-           -Dsonar.sources=$GITHUB_WORKSPACE 
-           -Dsonar.host.url=${{ secrets.SONAR_URL }} 
-           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-     
+    - name: Show folders
+      run: |                 
+        ls -R
+        cat src/coverage.xml
+      
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        projectBaseDir: src
+        args: >
+          -Dsonar.organization=kellysonrn
+          -Dsonar.coverage.jacoco.xmlReportPaths=./src/coverage.xml
+          -Dsonar.projectKey=KellysonRN_azure-functions-labs
+          -Dsonar.projectBaseDir=.
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} 
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}  
