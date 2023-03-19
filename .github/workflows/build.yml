@@ -15,8 +15,7 @@ jobs:
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
-    
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v3
       with:
           fetch-depth: 0
@@ -25,25 +24,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-        
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      with:
-        projectBaseDir: "${{ GITHUB.WORKSPACE }}/src"
-        args: >
-          -Dsonar.organization=$ORGANIZATION
-          -Dsonar.projectKey=$SONAR_PROJECT_KEY
-          -Dsonar.cs.vscoveragexml.reportsPaths=${{ GITHUB.WORKSPACE }}/src/coverage.xml  
-          -Dsonar.login="${{ secrets.SONAR_TOKEN }}"
-          -Dsonar.host.url="https://sonarcloud.io"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: Restore Dependencies
+      run: dotnet restore src
 
     - name: Build
       run: dotnet build src --configuration Release --no-restore
 
-    - name: Test Code Coverage
+    - name: Test
       run: dotnet test src --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
 
     - name: Code Coverage Report
@@ -67,6 +55,16 @@ jobs:
         path: code-coverage-results.md
         
     - name: Write to Job Summary
-      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY   
-   
+      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+      
+    - name: Setup sonarqube
+      uses: warchant/setup-sonar-scanner@v3
+      
+    - name: Run sonarqube
+      run: sonar-scanner
+           -Dsonar.organization=kellysonrn 
+           -Dsonar.projectKey=KellysonRN_azure-functions-labs
+           -Dsonar.sources=$GITHUB_WORKSPACE 
+           -Dsonar.host.url=${{ secrets.SONAR_URL }} 
+           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
      
