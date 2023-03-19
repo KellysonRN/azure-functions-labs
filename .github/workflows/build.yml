@@ -31,22 +31,20 @@ jobs:
     - name: Build
       run: dotnet build src --configuration Release --no-restore
       
-    - name: DotNet Coverage
+    - name: Sonar Scan
       run: |
-        dotnet tool install --global dotnet-coverage  
-        dotnet build src --no-incremental
-        dotnet test src
-        cd src
-        dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'
+        dotnet tool install --global dotnet-sonarscanner --version 5.2.0
+        dotnet tool update dotnet-reportgenerator-globaltool -g --version 4.8.7
 
-    #- name: Test
-    #  run: |
-    #    dotnet test src --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage        
+    - name: Test
+      run: |
+        dotnet test src --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage        
+        reportgenerator "-reports:./coverage/**/coverage.cobertura.xml" "-targetdir:./sonarqubecoverage" "-reporttypes:SonarQube"        
 
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: src/coverage.xml
+        filename: coverage/**/coverage.cobertura.xml
         badge: true
         fail_below_min: true
         format: markdown
@@ -75,7 +73,7 @@ jobs:
         projectBaseDir: src
         args: >
           -Dsonar.organization=kellysonrn
-          -Dsonar.coverage.jacoco.xmlReportPaths=./src/coverage.xml
+          -Dsonar.coverageReportPaths="./sonarqubecoverage/SonarQube.xml
           -Dsonar.projectKey=KellysonRN_azure-functions-labs
           -Dsonar.projectBaseDir=.
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} 
