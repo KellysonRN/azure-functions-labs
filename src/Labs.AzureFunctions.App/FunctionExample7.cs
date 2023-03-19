@@ -20,6 +20,8 @@ namespace Labs.AzureFunctions.App
             if (string.IsNullOrEmpty(queryParameter))
                 return new BadRequestResult();
 
+            log.LogInformation("C# HTTP trigger function processed a request");
+            
             if (queryParameter == "ThisStringCausesTheFunctionToThrowAnError")
                 return new InternalServerErrorResult();
 
