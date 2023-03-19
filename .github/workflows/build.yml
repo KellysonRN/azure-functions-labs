@@ -59,6 +59,9 @@ jobs:
       
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       with:
         projectBaseDir: src
         args: >
@@ -66,5 +69,5 @@ jobs:
           -Dsonar.cs.vscoveragexml.reportsPaths=$GITHUB_WORKSPACE/src/coverage/**/coverage.cobertura.xml
           -Dsonar.projectKey=KellysonRN_azure-functions-labs
           -Dsonar.sources=$GITHUB_WORKSPACE 
-          -Dsonar.host.url=${{ secrets.SONAR_URL }} 
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} 
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}      
