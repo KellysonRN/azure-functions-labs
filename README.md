@@ -57,3 +57,4 @@ $ dotnet tool install --global dotnet-coverage
 $ dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'
 ```
 
+Integration test
